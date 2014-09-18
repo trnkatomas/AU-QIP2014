@@ -1,0 +1,177 @@
+% author: Tomas Trnka
+% mail: tomas@trnkatomas.eu
+% date: 2013-07-04
+
+\documentclass[a4paper,10pt]{article}
+%\usepackage[czech]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[hmargin=2.2cm,vmargin=2.2cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{amsmath} 
+\usepackage{enumerate}
+\usepackage[hang,small,bf]{caption}    % fancy captions
+\usepackage{tikz}	
+\usetikzlibrary{backgrounds,fit,decorations.pathreplacing}  % TikZ libraries
+\newcommand{\ket}[1]{\ensuremath{\left|#1\right\rangle}} % Dirac Kets
+\usepackage{hyperref}
+\pagestyle{fancy}
+\headheight 15pt
+\lhead{QIP, Fall 2014}
+\rhead{Tomas Trnka}
+\newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
+\newcommand{\role}[1]{\ensuremath{\left\langle #1 \right\rangle}}
+\newcommand{\cara}{\begin{center}\rule{140mm}{.2mm}\end{center}}
+\newcommand{\mI}{\ensuremath{^\mathcal{I}}}
+\newcommand{\Tbox}[1]{\ensuremath{\mathcal{T}}-Box#1}
+\newcommand{\Abox}[1]{\ensuremath{\mathcal{A}}-Box#1}
+\newcommand{\mC}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\Tc}{\ensuremath{\mathcal{T}_c}}
+\newcommand{\qb}[1]{\ensuremath{\vert{#1}\rangle}}
+\newcommand{\asp}{\ensuremath{\frac{1}{\sqrt{2}}}}
+\newcommand{\ap}{\ensuremath{\frac{1}{2}}}
+\newcommand{\meter}{\includegraphics[scale=.5]{meter.eps}}
+\begin{document}
+\section*{Exercise 3 -- Deferred measurement}
+\begin{enumerate}
+\item 
+We are suppose to prove the equality of these two circuits
+\begin{figure}[h]
+  \centerline{
+    \begin{tikzpicture}[thick]
+    %
+    % `operator' will only be used by Hadamard (H) gates here.
+    % `phase' is used for controlled phase gates (dots).
+    % `surround' is used for the background box.
+    \tikzstyle{operator} = [draw,fill=white,minimum size=1.5em] 
+    \tikzstyle{phase} = [fill,shape=circle,minimum size=5pt,inner sep=0pt]
+    \tikzstyle{prod} = [draw,fill=white,shape=circle,minimum size=10pt,inner sep=0pt,path picture={\draw (path picture bounding box.south) -- (path picture bounding box.north) (path picture bounding box.west) -- (path picture bounding box.east);}]]
+    \tikzstyle{surround} = [fill=blue!10,thick,draw=black,rounded corners=2mm]
+    %
+        \node at (-0.5,0) (s1) {\qb{b}};
+    \node at (-0.5,-1) (s2) {\qb{\varphi}};    
+   % 
+    % Qubits
+    \node at (0,0) (q1) {};
+    \node at (0,-1) (q2) {};
+    %
+    % Column 3
+    \node[phase] (phase11) at (1,0) {} edge [-] (q1);
+    \node[operator] (phase12) at (1,-1) {U} edge [-] (q2);
+    \draw[-] (phase11) -- (phase12);	
+	%    
+	\node at (2,0) (met) {\meter} edge [-] (phase11);
+	\node at (2,0.1) (met-n) {};
+    \node at (2,-1) (end) {};    
+    %
+    \node at (3,0) (end2) {} edge [-] (met);
+    \node at (3,-1) (end3) {} edge [-] (phase12);
+    %
+    \end{tikzpicture}
+  }
+  \caption{}
+\end{figure}
+\begin{figure}[h]
+  \centerline{
+    \begin{tikzpicture}[thick]
+    %
+    % `operator' will only be used by Hadamard (H) gates here.
+    % `phase' is used for controlled phase gates (dots).
+    % `surround' is used for the background box.
+    \tikzstyle{operator} = [draw,fill=white,minimum size=1.5em] 
+    \tikzstyle{phase} = [fill,shape=circle,minimum size=5pt,inner sep=0pt]
+    \tikzstyle{prod} = [draw,fill=white,shape=circle,minimum size=10pt,inner sep=0pt,path picture={\draw (path picture bounding box.south) -- (path picture bounding box.north) (path picture bounding box.west) -- (path picture bounding box.east);}]]
+    \tikzstyle{surround} = [fill=blue!10,thick,draw=black,rounded corners=2mm]
+    %
+    % Qubits
+    \node at (-0.5,0) (s1) {\qb{b}};
+    \node at (-0.5,-1) (s2) {\qb{\varphi}};    
+   % 
+    \node at (0,0) (q1) {};
+    \node at (0,-1) (q2) {};
+    %
+	\node at (1,0) (met) {\meter} edge [=] (q1);
+	\node at (1,0.1) (met-n) {};
+    \node at (1,-1) (end) {};         
+    % Column 3
+    \node[phase] (phase11) at (2,0) {} edge [-,style=double] (met);
+    \node[operator] (phase12) at (2,-1) {U} edge [-] (q2);
+    \draw[-,style=double] (phase11) -- (phase12);	
+	%       
+    %
+    %\node at (3,0) (end2) {} edge [-] (phase11);
+    \node at (3,-1) (end3) {} edge [-] (phase12);
+    %
+    \end{tikzpicture}
+  }
+  \caption{}
+\end{figure}
+
+The second circuit can be described as follows, we have two qubits and measuring the first before interacting with the U-gate. For every input $\varphi$ we obtain output in this form $U^{b}\qb{\varphi}$, but $b$ is in this case classical bit.
+
+Every state in quantum circuit can be seen as a sum of this form
+$$
+\qb{\psi} = \sum_{x_1,...,x_n \in \lbrace 0,1 \rbrace^n}a_{x_1,...,x_n} \qb{x_1,...,x_n}
+$$
+This sum can be separated into two sums according to the first value to:
+$$
+\qb{\psi} = \sum_{x_2,...,x_n \in \lbrace 0,1 \rbrace^{n-1}}a_{0,x_2,...,x_n} \qb{0}\qb{x_2,...,x_n} +  \sum_{x_2,...,x_n \in \lbrace 0,1 \rbrace^{n-1}}a_{1,x_2,...,x_n} \qb{1}\qb{x_2,...,x_n} 
+$$
+We can write the qubit afterwards as $$\qb{\varphi} = a\qb{0}\qb{\Psi_0} + b\qb{1}\qb{\Psi_1}.$$ The measurements is projection to the subspaces of the qubit state. And we obtain 1 with the probability $|a|^2$ and 0 with probability $|b|^2$.
+This measurement influences the output of the circuit. The conclusion is that we obtain as output $\qb{\varphi}$ with the probability $|b|^2$ in case we measures the control bit as zero and U\qb{\varphi} with probability $|a|^2$ in case the control bit measurement outcome was 1.
+
+For the first circuit we obtaining after the U~gate the result in form of $\qb{b}U^b\qb{\varphi}$, but \qb{b} in general is superposition of $a\qb{0} + b\qb{1}$. So we can rewrite the output as a
+$$
+\qb{b}U^b\qb{\varphi} = a\qb{0}\qb{\varphi} + b\qb{1}U\qb{\varphi}
+$$
+When we measure this circuit even for the firs output we have got the probability $|a|^2$ to be the output of the first bit to be 0 and that the U~gate was not used and with probability $|b|^2$ the 1 is measured and then the U~transformation was applied for the input qubit U\qb{\varphi}.
+
+Then we can see that the results in both cases depend on the first qubit and the U-gate is controlled with the same probability and therefore it yield the same output with the same probability - i.e. this circuits are equal.
+\item The suggested circuit for generating random numbers can be shaped like this:
+\begin{figure}[h]
+  \centerline{
+    \begin{tikzpicture}[thick]
+    %
+    % `operator' will only be used by Hadamard (H) gates here.
+    % `phase' is used for controlled phase gates (dots).
+    % `surround' is used for the background box.
+    \tikzstyle{operator} = [draw,fill=white,minimum size=1.5em] 
+    \tikzstyle{phase} = [fill,shape=circle,minimum size=5pt,inner sep=0pt]
+    \tikzstyle{prod} = [draw,fill=white,shape=circle,minimum size=10pt,inner sep=0pt,path picture={\draw (path picture bounding box.south) -- (path picture bounding box.north) (path picture bounding box.west) -- (path picture bounding box.east);}]]
+    \tikzstyle{surround} = [fill=blue!10,thick,draw=black,rounded corners=2mm]
+    %
+    \node at (-0.5,0) (s1) {\qb{b}};
+    \node at (-0.5,-1) (s2) {\qb{\varphi}};    
+   % 
+    % Qubits
+    \node at (0,0) (q1) {};
+    \node at (0,-1) (q2) {};
+    %
+    \node[operator] (op1) at (1,0) {H} edge [-] (q1);
+    %
+    % Column 3
+    \node[phase] (phase11) at (2,0) {} edge [-] (op1);
+    \node[prod] (phase12) at (2,-1) {} edge [-] (q2);
+    \draw[-] (phase11) -- (phase12);	
+	%  
+    \node[operator] (op2) at (3,0) {H} edge [-] (phase11);  
+    %
+	\node at (4,0) (met) {\meter} edge [-] (op2);
+    \node at (4,-1) (end) {\meter} edge [-] (phase12);    
+    %
+    \end{tikzpicture}
+  }
+  \caption{}
+\end{figure}
+\end{enumerate}
+After applying all the transformations we obtain this matrix for linear transformation
+$$
+\left( \begin{array}{cccc}
+\frac{1}{2} & \frac{1}{2} & \frac{1}{2} & -\frac{1}{2} \\
+\frac{1}{2} & \frac{1}{2} & -\frac{1}{2} & \frac{1}{2} \\
+\frac{1}{2} & -\frac{1}{2} & \frac{1}{2} & \frac{1}{2} \\
+-\frac{1}{2} & \frac{1}{2} & \frac{1}{2} & \frac{1}{2} \\
+\end{array} \right)
+$$
+From the matrix we can see that the result is uniform distribution for all the states for two qubits. Now when we measure the, probabilities to be 0 or 1 are for both qubit are the same, i.e. when we measure the first qubit the result will be 0 with probability $\frac{1}{2}$ and the same to be one.
+\end{document}

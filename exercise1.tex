@@ -1,0 +1,62 @@
+% author: Tomas Trnka
+% mail: tomas@trnkatomas.eu
+% date: 2013-07-04
+
+\documentclass[a4paper,10pt]{article}
+\usepackage[czech]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[hmargin=2.2cm,vmargin=2.2cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{amsmath} 
+\usepackage{enumerate}
+\usepackage{tikz}
+\usepackage{hyperref}
+\pagestyle{fancy}
+\headheight 15pt
+\lhead{QIP, Fall 2014}
+\rhead{Tomáš Trnka}
+\newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
+\newcommand{\role}[1]{\ensuremath{\left\langle #1 \right\rangle}}
+\newcommand{\cara}{\begin{center}\rule{140mm}{.2mm}\end{center}}
+\newcommand{\mI}{\ensuremath{^\mathcal{I}}}
+\newcommand{\Tbox}[1]{\ensuremath{\mathcal{T}}-Box#1}
+\newcommand{\Abox}[1]{\ensuremath{\mathcal{A}}-Box#1}
+\newcommand{\mC}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\Tc}{\ensuremath{\mathcal{T}_c}}
+\newcommand{\qb}[1]{\ensuremath{\vert{#1}\rangle}}
+\begin{document}
+\section*{Exercise 1 -- Entanglement}
+\begin{enumerate}[a)]
+\item \label{itm:first} Single qubit such as \qb{\varphi} or \qb{\psi} is a linear combination of basis vectors. This notation stands for an expression $\qb{\varphi} = \alpha \qb{0} + \beta\qb{1}$. The tensor product of two single qubits then will look as follows:
+\begin{eqnarray*}
+\qb{\varphi} \otimes \qb{\psi} &=& \left( \alpha \qb{0} + \beta\qb{1} \right) \otimes \left( \gamma \qb{0} + \delta \qb{1} \right)\\
+&=& \alpha \qb{0}\gamma \qb{0} + \alpha \qb{0}\delta\qb{1}  + \beta\qb{1}\gamma \qb{0} + \beta{\qb{1}}\delta \qb{1} \\
+&=& \alpha\gamma\qb{00} + \alpha\delta\qb{01} + \beta\gamma\qb{10} + \beta\delta\qb{11}\\
+\end{eqnarray*}
+Since the parts $\alpha\delta\qb{01} + \beta\gamma\qb{10}$ are missing in our example we can conclude that at least one coefficient from each group is equal to zero, i.e. $\alpha$ or $\delta$ or either $\beta$ or $\gamma$ respectively. There is no other solution how to obtain zero in these products and therefore the coefficients for the parts of the product state \qb{00} and \qb{11} must be also zero. So there are no such single qubit states which product would give us the desired $\frac{1}{\sqrt{2}}\qb{00} + \frac{1}{\sqrt{2}}\qb{11}$ state, which means that this state is entangled.
+
+\item For the state $\frac{1}{\sqrt{2}}\qb{01} + \frac{1}{\sqrt{2}}\qb{10}$ holds the same reasoning as for the state in section \ref{itm:first}) and therefore the state is entangled.
+
+On the other hand, the state $\frac{1}{\sqrt{2}}\qb{01} + \frac{1}{\sqrt{2}}\qb{11}$ is not entangled. This state can be decomposed as tensor product of single qubit states:
+\begin{eqnarray*}
+\qb{\varphi} \otimes \qb{\psi} &=& \left( \alpha \qb{0} + \beta\qb{1} \right) \otimes \left( \gamma \qb{0} + \delta \qb{1} \right)\\
+&=& \alpha \qb{0}\gamma \qb{0} + \alpha \qb{0}\delta\qb{1}  + \beta\qb{1}\gamma \qb{0} + \beta{\qb{1}}\delta \qb{1} \\
+&=& \alpha\gamma\qb{00} + \alpha\delta\qb{01} + \beta\gamma\qb{10} + \beta\delta\qb{11}\\
+\end{eqnarray*}
+where we would like to have:
+\begin{eqnarray*}
+\alpha\delta&=&\frac{1}{\sqrt{2}} \text{ and}\\
+\beta\delta&=&\frac{1}{\sqrt{2}} \text{, now we can conclude that}\\
+\beta &=& \alpha
+\end{eqnarray*}
+Since must also holds that $\vert \alpha \vert ^2 + \vert \beta \vert ^2 = 1$ and $\vert \gamma \vert ^2 + \vert \delta \vert ^2 = 1$ the solution for this equations is $\alpha=\beta=\frac{1}{\sqrt{2}}$ and $\delta=1$. With these coefficients we can write down the original single qubit states:
+\begin{eqnarray*}
+\qb{\varphi} &=& \alpha\qb{0}+ \beta\qb{1}\\
+\qb{\varphi} &=& \frac{1}{\sqrt{2}}\qb{0} +\frac{1}{\sqrt{2}}\qb{1}\\
+\qb{\psi} &=& \gamma\qb{0} +\delta\qb{1}\\
+\qb{\psi} &=& \qb{1}\\
+\end{eqnarray*}
+This state is product state.
+\end{enumerate}
+\end{document}
