@@ -1,0 +1,109 @@
+% author: Tomas Trnka
+% mail: tomas@trnkatomas.eu
+% date: 2013-07-04
+
+\documentclass[a4paper,10pt]{article}
+%\usepackage[czech]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[hmargin=2.2cm,vmargin=2.2cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{amsmath} 
+\usepackage{enumerate}
+\usepackage[hang,small,bf]{caption}    % fancy captions
+\usepackage{tikz}	
+\usetikzlibrary{backgrounds,fit,decorations.pathreplacing}  % TikZ libraries
+\newcommand{\bra}[1]{\ensuremath{\left\langle#1\right|}} % Dirac Bra
+\newcommand{\ket}[1]{\ensuremath{\left|#1\right\rangle}} % Dirac Kets
+\usepackage{hyperref}
+\pagestyle{fancy}
+\headheight 15pt
+\lhead{QIP, Fall 2014}
+\rhead{Tomas Trnka}
+\newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
+\newcommand{\role}[1]{\ensuremath{\left\langle #1 \right\rangle}}
+\newcommand{\cara}{\begin{center}\rule{140mm}{.2mm}\end{center}}
+\newcommand{\mI}{\ensuremath{^\mathcal{I}}}
+\newcommand{\Tbox}[1]{\ensuremath{\mathcal{T}}-Box#1}
+\newcommand{\Abox}[1]{\ensuremath{\mathcal{A}}-Box#1}
+\newcommand{\mC}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\Tc}{\ensuremath{\mathcal{T}_c}}
+\newcommand{\qb}[1]{\ensuremath{\vert{#1}\rangle}}
+\newcommand{\al}{\ensuremath{\alpha}}
+\newcommand{\asp}{\ensuremath{\frac{1}{\sqrt{2}}}}
+\newcommand{\ap}{\ensuremath{\frac{1}{2}}}
+\begin{document}
+\section*{Exercise 4}
+\begin{enumerate}[a)]
+\item 
+We have to show that opertion $(2\ket{\varphi}\bra{\varphi} - I)$ on general state $\sum_k \alpha \ket{k}$ produces
+$$
+\sum_k \left[ - \alpha_k + 2\langle\alpha\rangle \right] \ket{k}
+$$
+where the $\langle \al \rangle$ stands for $\sum_k \frac{\al_k}{N}$.
+The transformation with the identity matrix $I$ is easy. Because we are subtracting the $I$ ale the coefficients $\alpha_k$ will have the minus sign $-\alpha_k$.
+%\begin{eqnarray*}
+$$
+\ket{\psi}  =  \frac{1}{\sqrt{N}} \sum_{x } \ket{x}
+$$
+$$
+\bra{\psi}  =  \frac{1}{\sqrt{N}} \sum_{x'} \bra{x'} \\
+$$
+We have introduced the equivalently probable state $\psi$ in some basis K.
+$$
+\left( 2\bra{\psi}\ket{\psi} - I\right)  \sum_k \al_k\ket{k}\\
+$$
+The first step will be to expand the expression in the parenthesis:
+$$
+2\bra{\psi}\ket{\psi} \sum_k \al_k\ket{k} - \sum_k \al_k\ket{k}\\
+$$
+Now we rewrite the \ket{\psi} and \bra{\psi}
+$$
+2 \frac{1}{\sqrt{N}} \sum_{x } \ket{x}  \frac{1}{\sqrt{N}} \sum_{x'} \bra{x'}\sum_k \al_k\ket{k} -  \sum_k \al_k\ket{k}\\
+$$
+Now we can put some of the part before the sums
+$$
+2 \frac{1}{N} \sum_{x,x',k} \al_k \ket{x}  \bra{x'}\ket{k} -  \sum_k \al_k\ket{k}\\
+$$
+We can see that $\bra{x'}\ket{k}$ is a complex number so we can "hide" it in the sum of $\al_k$:
+$$
+2 \frac{1}{N} \sum_{x,k} \al_k \ket{x} -  \sum_k \al_k\ket{k}\\
+$$
+Now we will assume that either \ket{x} and \ket{k} are the same basis or we simply compute the matrix of transformation and again "hide" the coefficients of this matrix into the sum over $\al_k$:
+$$
+2 \frac{1}{N} \sum_{k,k} \al_k \ket{k} -  \sum_k \al_k\ket{k}\\
+$$
+And then simply adjust the formula:
+$$
+\sum_k \left( \frac{2}{N}\sum_{k} \al_k -  \al_k \right)\ket{k}= \\
+$$
+We can substitute the first part of the parenthesis:
+$$
+\sum_k \left( - \alpha_k + 2\langle\alpha\rangle \right)i \ket{k}
+$$
+\item The second part will be as follows. We have equally weighted superposition this means that we have probability for each state to be measured as $\frac{1}{\sqrt{2^N}}$. Than the $O$ oracle function will flip the sign for the $x$ we are looking for. \\
+Then we can put these probabilities into the formula.
+Firstly we have to compute the mean for the $\al_k$
+$$
+2\cdot\frac{1}{N}\left(N-1\right)\cdot\frac{1}{\sqrt{2^n}}-\frac{1}{\sqrt{2^n}}
+$$
+This can be simplified to the form:
+$$
+\frac{2 (N-2)}{\sqrt{2^n} N}
+$$
+The second part of the Grover operation will be for all the 'bad' states
+$$
+\frac{2 (N-2)}{\sqrt{2^n} N}-\frac{1}{\sqrt{2^n}} = \frac{N-4}{\sqrt{2^n} N}
+$$
+and for the 'good' states:
+$$
+\frac{2 (N-2)}{\sqrt{2^n} N}+\frac{1}{\sqrt{2^n}} = 
+\frac{3 N-4}{\sqrt{2^n} N}
+$$
+The initial probability was:
+$$
+\frac{1}{\sqrt{2^N}}
+$$
+So we can see that for large number for $N$ the probability will be 3 times bigger to measure the state we are concern about.
+\end{enumerate}
+\end{document}
