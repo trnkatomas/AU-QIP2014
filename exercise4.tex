@@ -41,7 +41,7 @@ $$
 \sum_k \left[ - \alpha_k + 2\langle\alpha\rangle \right] \ket{k}
 $$
 where the $\langle \al \rangle$ stands for $\sum_k \frac{\al_k}{N}$.
-The transformation with the identity matrix $I$ is easy. Because we are subtracting the $I$ ale the coefficients $\alpha_k$ will have the minus sign $-\alpha_k$.
+The transformation with the identity matrix $I$ is easy. Because we are subtracting the $I$ ale the coefficients $\alpha_k$ will have the minus sign $-\alpha_k$. Let's examine the first part of the transformation. We have introduced earlier the states \ket{\psi} and \bra{\psi}. They look as follows:
 %\begin{eqnarray*}
 $$
 \ket{\psi}  =  \frac{1}{\sqrt{N}} \sum_{x } \ket{x}
@@ -65,7 +65,7 @@ Now we can put some of the part before the sums
 $$
 2 \frac{1}{N} \sum_{x,x',k} \al_k \ket{x}  \bra{x'}\ket{k} -  \sum_k \al_k\ket{k}\\
 $$
-We can see that $\bra{x'}\ket{k}$ is a complex number so we can "hide" it in the sum of $\al_k$:
+We can see that $\bra{x'}\ket{k}$ is an inner product and therefore complex number, so we can "hide" it in the sum of $\al_k$:
 $$
 2 \frac{1}{N} \sum_{x,k} \al_k \ket{x} -  \sum_k \al_k\ket{k}\\
 $$
@@ -81,29 +81,34 @@ We can substitute the first part of the parenthesis:
 $$
 \sum_k \left( - \alpha_k + 2\langle\alpha\rangle \right)i \ket{k}
 $$
-\item The second part will be as follows. We have equally weighted superposition this means that we have probability for each state to be measured as $\frac{1}{\sqrt{2^N}}$. Than the $O$ oracle function will flip the sign for the $x$ we are looking for. \\
+\item The second part will be as follows. We have equally weighted superposition this means that we have probability for each state to be measured as $\frac{1}{\sqrt{N}}$. Than the $O$ oracle function will flip the sign for the $x$ we are looking for. \\
 Then we can put these probabilities into the formula.
 Firstly we have to compute the mean for the $\al_k$
 $$
-2\cdot\frac{1}{N}\left(N-1\right)\cdot\frac{1}{\sqrt{2^n}}-\frac{1}{\sqrt{2^n}}
+2\cdot\frac{1}{N}\left(N-1\right)\cdot\frac{1}{\sqrt{N}}-\frac{1}{\sqrt{N}}
 $$
 This can be simplified to the form:
 $$
-\frac{2 (N-2)}{\sqrt{2^n} N}
+\frac{2 (N-2)}{\sqrt{N} N}
 $$
 The second part of the Grover operation will be for all the 'bad' states
 $$
-\frac{2 (N-2)}{\sqrt{2^n} N}-\frac{1}{\sqrt{2^n}} = \frac{N-4}{\sqrt{2^n} N}
+\frac{2 (N-2)}{\sqrt{N} N}-\frac{1}{\sqrt{N}} = \frac{N-4}{\sqrt{N} N}
 $$
 and for the 'good' states:
 $$
-\frac{2 (N-2)}{\sqrt{2^n} N}+\frac{1}{\sqrt{2^n}} = 
-\frac{3 N-4}{\sqrt{2^n} N}
+\frac{2 (N-2)}{\sqrt{N} N}+\frac{1}{\sqrt{2^n}} = 
+\frac{3 N-4}{\sqrt{N} N}
 $$
 The initial probability was:
 $$
 \frac{1}{\sqrt{2^N}}
 $$
-So we can see that for large number for $N$ the probability will be 3 times bigger to measure the state we are concern about.
+So we can see that for large number for $N$ we can adjust the formula:
+$$
+\frac{3 N-4}{\sqrt{N} N}=
+\frac{3 N}{\sqrt{N} N}-\frac{4}{\sqrt{N} N} \approx^{big N} \frac{3N}{\sqrt{N}N}-0=\frac{3}{\sqrt{N}}
+$$
+And it is clearly visible that the probability will be 3 times bigger to measure the state we are concern about.
 \end{enumerate}
 \end{document}
