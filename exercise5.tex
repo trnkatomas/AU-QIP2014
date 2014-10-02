@@ -1,0 +1,61 @@
+% author: Tomas Trnka
+% mail: tomas@trnkatomas.eu
+% date: 2013-07-04
+
+\documentclass[a4paper,10pt]{article}
+%\usepackage[czech]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[hmargin=2.2cm,vmargin=2.2cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{amsmath} 
+\usepackage{enumerate}
+\usepackage[hang,small,bf]{caption}    % fancy captions
+\usepackage{tikz}	
+\usetikzlibrary{backgrounds,fit,decorations.pathreplacing}  % TikZ libraries
+\newcommand{\bra}[1]{\ensuremath{\left\langle#1\right|}} % Dirac Bra
+\newcommand{\ket}[1]{\ensuremath{\left|#1\right\rangle}} % Dirac Kets
+\usepackage{hyperref}
+\pagestyle{fancy}
+\headheight 15pt
+\lhead{QIP, Fall 2014}
+\rhead{Tomas Trnka}
+\newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
+\newcommand{\role}[1]{\ensuremath{\left\langle #1 \right\rangle}}
+\newcommand{\cara}{\begin{center}\rule{140mm}{.2mm}\end{center}}
+\newcommand{\mI}{\ensuremath{^\mathcal{I}}}
+\newcommand{\Tbox}[1]{\ensuremath{\mathcal{T}}-Box#1}
+\newcommand{\Abox}[1]{\ensuremath{\mathcal{A}}-Box#1}
+\newcommand{\mC}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\Tc}{\ensuremath{\mathcal{T}_c}}
+\newcommand{\qb}[1]{\ensuremath{\vert{#1}\rangle}}
+\newcommand{\al}{\ensuremath{\alpha}}
+\newcommand{\asp}{\ensuremath{\frac{1}{\sqrt{2}}}}
+\newcommand{\ap}{\ensuremath{\frac{1}{2}}}
+\begin{document}
+\section*{Exercise 5}
+The task is to came with an idea how to reasonably combine both algorithms mentioned.
+
+\begin{enumerate}[1]
+\item 
+We have to select the constant size of the table, so let's take into account the space limitation which is $\vert K \vert = \sqrt[3]{N}$. We create a table $L$ of pairs $(x,F(x))$, $\forall x \in K$ where $K$ is arbitrary random subset of all the possible inputs. The next step is to sort the table according to the second entry of each pair, i.e. $F(x)$ as we have done before for the classical algorithm.
+
+\item
+Then we can check for the first time whether there is a collision in our sorted table. It there is we found a collision and we don't have to anything else.
+
+\item
+If no collision was found we have to use standard Grover search with the oracle function. The previously suggested Grover algorithm oracle has to be adjusted in following way:
+$$
+H(x) = \left\{
+  \begin{array}{ll}
+    1 & : \text{iff }\exists x_0 \in K\text{, for that holds }(x_0, F(x))\in L\text{ ,but }x\neq x_0\text{, i.e. }x \notin K\\
+    0 & : \text{otherwise}
+  \end{array}
+\right.
+$$
+
+\item
+After applying this Grover search we have found the collision between $x$ and $x_0$.
+
+\end{enumerate}
+\end{document}
