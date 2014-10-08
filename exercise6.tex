@@ -1,0 +1,95 @@
+% author: Tomas Trnka
+% mail: tomas@trnkatomas.eu
+% date: 2013-07-04
+
+\documentclass[a4paper,10pt]{article}
+%\usepackage[czech]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[hmargin=2.2cm,vmargin=2.2cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{amsmath} 
+\usepackage{enumerate}
+\usepackage{dsfont}
+\usepackage[hang,small,bf]{caption}    % fancy captions
+\usepackage{tikz}	
+\usetikzlibrary{backgrounds,fit,decorations.pathreplacing}  % TikZ libraries
+\newcommand{\bra}[1]{\ensuremath{\left\langle#1\right|}} % Dirac Bra
+\newcommand{\ket}[1]{\ensuremath{\left|#1\right\rangle}} % Dirac Kets
+\usepackage{hyperref}
+\pagestyle{fancy}
+\headheight 15pt
+\lhead{QIP, Fall 2014}
+\rhead{Tomas Trnka}
+\newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
+\newcommand{\role}[1]{\ensuremath{\left\langle #1 \right\rangle}}
+\newcommand{\cara}{\begin{center}\rule{140mm}{.2mm}\end{center}}
+\newcommand{\mI}{\ensuremath{^\mathcal{I}}}
+\newcommand{\Tbox}[1]{\ensuremath{\mathcal{T}}-Box#1}
+\newcommand{\Abox}[1]{\ensuremath{\mathcal{A}}-Box#1}
+\newcommand{\mC}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\Tc}{\ensuremath{\mathcal{T}_c}}
+\newcommand{\qb}[1]{\ensuremath{\vert{#1}\rangle}}
+\newcommand{\al}{\ensuremath{\alpha}}
+\newcommand{\asp}{\ensuremath{\frac{1}{\sqrt{2}}}}
+\newcommand{\ap}{\ensuremath{\frac{1}{2}}}
+\begin{document}
+\section*{Quantum Fourier Transformation - Exercise 6}
+\begin{enumerate}[1]
+\item 
+The first step is to apply $F_N$ to the given o~input state \ket{v} = $\sum_{x=0}^{N-1} \alpha_x\ket{x}$.
+We have to just apply the transformation to the give state:
+$$
+F_N\ket{v} = \sum_{x=0}^{N-1} F_N \alpha_x \ket{x} = \sum_{x=0}^{N-1} \sum_{j=0}^{N-1} \frac{\alpha_x \omega_N^{ijx}}{\sqrt{N}} \ket{j}
+$$
+Now when we measure the probability that we are obtaining some $z$ for which holds $0 \leq z \leq N$, we just take the amplitude for given $j-th$ basis vector squared,i.e.:
+$$
+\frac{\left(\alpha_x \omega^{ijx}\right)^2}{N}
+$$
+
+\item
+We have to show that when we measure the result of $F_M$ we obtain the good results in form $y = z \frac{M}{N}$ with a probability $\frac{N}{M}$.
+
+The variables $z$ and $y$ belong to the $\mathds{Z}$, therefore the number of possibilities that  $z$ can be is $N$. The same holds for $y$, only the number possibilities is $M$. We have the equation $y=z \frac{M}{N}$ but since the $N$ divides $M$ we can claim that the $\frac{M}{N}$ is some integer $t$.
+
+Now we have the equation for the good solutions in a form $y = zt$ which means that we can only have $N$ possibilities for Z~that are multiplied by some constant $t$ which obviously does not change the count of possibilities. The overall count of possibilities for $y$ is $M$ and therefore the probability to obtain the good result is $\frac{N}{M}$.
+
+\item 
+First we have to apply the Fourier transformation $F_M$ to the given state \ket{v}. This process will be the same as in the first bullet.
+
+$$
+F_M\ket{v} = \sum_{x=0}^{N-1} F_M \alpha_x \ket{x} = \sum_{x=0}^{N-1} \sum_{j'=0}^{M-1} \frac{\alpha_x \omega_M^{ij'x}}{\sqrt{M}} \ket{j'}
+$$
+
+Now we will show that $\omega_M^{M/N} = \omega_N$. The $\omega_M$ just stands for more complicated coefficient that looks like $\omega_M = e^{\frac{i2\Pi jk}{M}}$. Our goal is to show the powering it will produce the $\omega_N$.
+$$
+\omega_M^{\frac{M}{N}} = e^{\frac{i2\Pi jk}{M}\cdot\frac{M}{N}}
+$$
+Since the operation in the exponent are just multiplication we can just cancel out the $M$. Then we obtain what we have before:
+$$
+e^{\frac{i2\Pi jk}{N}} = \omega_N
+$$
+
+Now we can take a closer look at the output of the Fourier transformation $F_M$. We have to take into account that since we are concern only about the 'good' results for the measurement of $F_M$ we have our $j'$ in form that suits equation $j'=z\frac{M}{N}$. Now we can input the previous result and instead of
+$\omega_M^{ij'x}$ we can consider $\omega_M^{iz\frac{M}{N}x}$ which is $\omega_N^{izx}$.
+
+$$
+\sum_{x=0}^{N-1} \sum_{j'=0}^{M-1} \frac{\alpha_x \omega_M^{ij'x}}{\sqrt{M}} \ket{j'} = 
+\sum_{x=0}^{N-1} \sum_{j'=0}^{M-1} \frac{\alpha_x \omega_N^{izx}}{\sqrt{M}} \ket{j'}
+$$
+
+Since $M$ is divisible by $N$ we can rewrite the $M$ as a product of $Nt$. An put this into the equation.
+
+$$
+\sum_{x=0}^{N-1} \sum_{j'=0}^{Nt-1} \frac{\alpha_x \omega_N^{izx}}{\sqrt{Nt}} \ket{j'}
+$$
+
+Since we have got larger amount of possibilities in the $F_M$ but also 'more' possibilities to measure the correct solution, in fact the number of these correct solution is $t$. So if we would like to obtain the probability of measurement some of the states, we again square the amplitudes. which is 
+
+$$
+t\frac{\left(\alpha_x \omega^{izx}\right)^2}{Nt} =  \frac{\left(\alpha_x \omega^{izx}\right)^2}{N}
+$$
+
+But because the $M$ is divisible by $N$ we obtain $t$ solutions, but $t$'s as we can see are cancelled out. Having the $z$ instead of $j$ also does not matters, we only have to create correct 'mapping' from $F_M$ to $F_N$ and $z$ to $j$.
+\end{enumerate}
+\end{document}
