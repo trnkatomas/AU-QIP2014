@@ -1,0 +1,98 @@
+% author: Tomas Trnka
+% mail: tomas@trnkatomas.eu
+% date: 2013-07-04
+
+\documentclass[a4paper,10pt]{article}
+%\usepackage[czech]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[hmargin=2.2cm,vmargin=2.2cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{amsmath, tabu} 
+\usepackage{enumerate}
+\usepackage{dsfont}
+\usepackage[hang,small,bf]{caption}    % fancy captions
+\usepackage{tikz}	
+\usetikzlibrary{backgrounds,fit,decorations.pathreplacing}  % TikZ libraries
+\newcommand{\bra}[1]{\ensuremath{\left\langle#1\right|}} % Dirac Bra
+\newcommand{\ket}[1]{\ensuremath{\left|#1\right\rangle}} % Dirac Kets
+\usepackage{hyperref}
+\pagestyle{fancy}
+\headheight 15pt
+\lhead{QIP, Fall 2014}
+\rhead{Tomas Trnka}
+\newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
+\newcommand{\role}[1]{\ensuremath{\left\langle #1 \right\rangle}}
+\newcommand{\cara}{\begin{center}\rule{140mm}{.2mm}\end{center}}
+\newcommand{\mI}{\ensuremath{^\mathcal{I}}}
+\newcommand{\Tbox}[1]{\ensuremath{\mathcal{T}}-Box#1}
+\newcommand{\Abox}[1]{\ensuremath{\mathcal{A}}-Box#1}
+\newcommand{\mC}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\Tc}{\ensuremath{\mathcal{T}_c}}
+\newcommand{\qb}[1]{\ensuremath{\vert{#1}\rangle}}
+\newcommand{\al}{\ensuremath{\alpha}}
+\newcommand{\asp}{\ensuremath{\frac{1}{\sqrt{2}}}}
+\newcommand{\aps}{\ensuremath{\frac{1}{2\sqrt{2}}}}
+\newcommand{\ap}{\ensuremath{\frac{1}{2}}}
+\begin{document}
+\section*{QIPexercises -- Exercise 10}
+\begin{enumerate}[1.]
+\item We know that the classical states are transformed with the Shore code to the states:
+$$
+\ket{0} = \aps (\ket{000} + \ket{111}) \otimes (\ket{000} + \ket{111}) \otimes (\ket{000} + \ket{111})
+$$
+$$
+\ket{1} = \aps (\ket{000} - \ket{111}) \otimes (\ket{000} - \ket{111}) \otimes (\ket{000} - \ket{111})
+$$
+If we have in the begging the general state in form $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ we have to combine these states to obtain the result for the general state.
+
+I will write it in the short notation
+
+$$
+\aps (\alpha\ket{+++} + \beta\ket{---}) \otimes (\ket{+++} + \ket{---}) \otimes (\ket{+++} + \ket{---})
+$$
+
+Because we are concerned just about the first 3 bits I will concentrate on them. 
+
+On the first state an error occurred and caused the phase flip. Because of the phase flip can be represented as a Z-gate and Z-gate is its own inverse, we can consider it as applying the identity matrix to the first qubit and therefore it will remain as it was before the error. Now we have to ensure ourselves that also the other qubits that are entangled with the first qubit and will not be changed (because of the CNOT gates and changed bases where they act as control bits) and will remain the same even after applying $Z_2$ and $Z_3$.
+
+We have $$
+Z_1e_{pf1}(\alpha\ket{+}+ \beta\ket{-})\otimes Z_2Z_3(\ket{++} + \ket{--})
+$$
+The $Z_2Z_3$ transformation matrix will look like tensor product of the two gates that phase flip the right bit
+$$
+Z_2 = \left(
+\begin{array}{cccc}
+1& 0& 0& 0 \\
+0& 1& 0 &0\\
+0 &0& -1& 0\\
+0 &0& 0 &-1
+\end{array}
+\right), 
+Z_3 = \left(
+\begin{array}{cccc}
+1& 0& 0& 0 \\
+0& -1& 0 &0\\
+0 &0& 1& 0\\
+0 &0& 0 &-1
+\end{array}
+\right)
+$$
+
+We can multiply these matrices to obtain the whole $Z_1Z_2$ operator:
+$$
+Z_2Z_3 = \left(
+\begin{array}{cccc}
+1& 0& 0& 0 \\
+0& -1& 0 &0\\
+0 &0& -1& 0\\
+0 &0& 0 &1
+\end{array}
+\right)
+$$
+
+But since we know that the \ket{++} is equal to $(\ket{00} +\ket{11})$ and \ket{--} to $(\ket{00} - \ket{11})$. If we would multiply this state we would  see that all parts of this state can be expressed as linear combination of \ket{00} and \ket{11}. But we know that state \ket{00} is equivalent to the first column of matrix representing 2 qubit state and \ket{11} is represented by the $4^{\text{th}}$ column. Therefore we can see that after the matrix multiplication the state will be the same as was before. 
+
+We have shown that the the $Z_1$ revert the error caused either by noise or either by the adversary and also that applying both $Z_2$ and $Z_3$ we will not change the state.
+\end{enumerate}
+\end{document}

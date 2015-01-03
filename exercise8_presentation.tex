@@ -1,0 +1,87 @@
+% author: Tomas Trnka
+% mail: tomas@trnkatomas.eu
+% date: 2013-07-04
+
+\documentclass[a4paper,10pt]{article}
+%\usepackage[czech]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[hmargin=2.2cm,vmargin=2.2cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{amsmath} 
+\usepackage{enumerate}
+\usepackage{dsfont}
+\usepackage[hang,small,bf]{caption}    % fancy captions
+\usepackage{tikz}	
+\usetikzlibrary{backgrounds,fit,decorations.pathreplacing}  % TikZ libraries
+\newcommand{\bra}[1]{\ensuremath{\left\langle#1\right|}} % Dirac Bra
+\newcommand{\ket}[1]{\ensuremath{\left|#1\right\rangle}} % Dirac Kets
+\usepackage{hyperref}
+\pagestyle{fancy}
+\headheight 15pt
+\lhead{QIP, Fall 2014}
+\rhead{Tomas Trnka}
+\newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
+\newcommand{\role}[1]{\ensuremath{\left\langle #1 \right\rangle}}
+\newcommand{\cara}{\begin{center}\rule{140mm}{.2mm}\end{center}}
+\newcommand{\mI}{\ensuremath{^\mathcal{I}}}
+\newcommand{\Tbox}[1]{\ensuremath{\mathcal{T}}-Box#1}
+\newcommand{\Abox}[1]{\ensuremath{\mathcal{A}}-Box#1}
+\newcommand{\mC}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\Tc}{\ensuremath{\mathcal{T}_c}}
+\newcommand{\qb}[1]{\ensuremath{\vert{#1}\rangle}}
+\newcommand{\al}{\ensuremath{\alpha}}
+\newcommand{\asp}{\ensuremath{\frac{1}{\sqrt{2}}}}
+\newcommand{\ap}{\ensuremath{\frac{1}{2}}}
+\begin{document}
+\section*{Exercise 8 Presentation}
+\begin{enumerate}[1]
+\item In first let's argue that $M^\dagger M$ is Hermitian. Matrix is Hermitian if holds that $A = A^\dagger$.
+
+So let's do that:
+$(M^\dagger M)^\dagger = M^\dagger (M^\dagger)^\dagger = M^\dagger M$
+
+And therefore have only real eigenvalues.
+
+\item Now we have to consider $\bra{v} M^\dagger M \ket{v}$ and claim that $\lambda \geq 0$
+
+\item What we know about the Eignevectors:
+$$
+M^\dagger M v = \lambda v
+$$
+
+I would suggest that it works even for $M^\dagger M \ket{v} = \lambda \ket{v}$
+
+Then when we multiply by \ket{v}:
+$$
+\bra{v} M^\dagger M \ket{v} = \bra{v} \lambda \ket{v}
+$$
+$$
+\bra{v} M^\dagger M \ket{v} = \lambda \bra{v} \ket{v}
+$$
+$$
+\bra{v} M^\dagger M \ket{v} = \lambda ||v||^2
+$$
+
+Look at the paper, in the end we have 
+
+$$
+\bra{v}M^\dagger * M\ket{v}
+$$
+which is
+$$
+\left( \begin{array}{ccc}
+\sum_i^n v_i\cdot \overline{a_{1i}} & \hdots & \sum_i^n v_i\cdot \overline{a_{ni}}  \\
+\end{array} \right)\
+$$
+$$
+\left( \begin{array}{c}
+\sum_i^n v_i\cdot a_{1i} \\
+\vdots \\
+\sum_i^n v_i\cdot a_{ni} 
+\end{array} \right)\
+$$
+
+Meanwhile the $\bra{v} \lambda \ket{v}$ is equal to the beast on the left side we can comlude that $\lambda * ||v||^2$ must be bigger or equal zero
+\end{enumerate}
+\end{document}

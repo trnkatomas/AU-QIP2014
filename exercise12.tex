@@ -1,0 +1,77 @@
+% author: Tomas Trnka
+% mail: tomas@trnkatomas.eu
+% date: 2013-07-04
+
+\documentclass[a4paper,10pt]{article}
+%\usepackage[czech]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[hmargin=2.2cm,vmargin=2.2cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{amsmath, tabu} 
+\usepackage{enumerate}
+\usepackage{dsfont}
+\usepackage[hang,small,bf]{caption}    % fancy captions
+\usepackage{tikz}	
+\newcommand{\bra}[1]{\ensuremath{\left\langle#1\right|}} % Dirac Bra
+\newcommand{\ket}[1]{\ensuremath{\left|#1\right\rangle}} % Dirac Kets
+\usepackage{hyperref}
+\pagestyle{fancy}
+\headheight 15pt
+\lhead{QIP, Fall 2014}
+\rhead{Tomas Trnka}
+\newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
+\newcommand{\role}[1]{\ensuremath{\left\langle #1 \right\rangle}}
+\newcommand{\cara}{\begin{center}\rule{140mm}{.2mm}\end{center}}
+\newcommand{\mI}{\ensuremath{^\mathcal{I}}}
+\newcommand{\Tbox}[1]{\ensuremath{\mathcal{T}}-Box#1}
+\newcommand{\Abox}[1]{\ensuremath{\mathcal{A}}-Box#1}
+\newcommand{\mC}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\Tc}{\ensuremath{\mathcal{T}_c}}
+\newcommand{\qb}[1]{\ensuremath{\vert{#1}\rangle}}
+\newcommand{\al}{\ensuremath{\alpha}}
+\newcommand{\asp}{\ensuremath{\frac{1}{\sqrt{2}}}}
+\newcommand{\aps}{\ensuremath{\frac{1}{2\sqrt{2}}}}
+\newcommand{\ap}{\ensuremath{\frac{1}{2}}}
+\begin{document}
+\section*{CSS codewords -- Exercise 12}
+We are supposed to show that the codewords states for the CSS codewords \ket{\xi_{x,z,v_k}} satisfy:
+$$
+\frac{1}{\sqrt{2^n}}\sum_{j\in \{0,1\}^n} \ket{j}\ket{j} = \frac{1}{\sqrt{2^n}}\sum_{v_k \in  C_{1/2},x\in C_{all/1},z \in C_{all/2^\bot}}\ket{\xi_{x,z,v_k}}\ket{\xi_{x,z,v_k}}
+$$
+\begin{enumerate}[1.]
+\item 
+The CSS codewords can be rewritten as:
+$$
+\ket{\xi_{x,z,v_k}} = \frac{1}{\sqrt{|C_2|}} \sum_{y \in C_2} (-1)^{y \cdot z} \ket{v_k + x + y},
+$$
+and then we obtain the whole right part of equation as:
+$$
+\sum_{v_k \in  C_{1/2},x\in C_{all/1},z \in C_{all/2^\bot}}\frac{1}{\sqrt{|C_2|}} \sum_{y \in C_2} (-1)^{y \cdot z} \ket{v_k + x + y}\frac{1}{\sqrt{|C_2|}} \sum_{y \in C_2} (-1)^{y \cdot z} \ket{v_k + x + y}
+$$
+We can reorganize the sums:
+$$
+\frac{1}{|C_2|}\sum_{z \in C_{all/2^\bot}}\sum_{y \in C_2} (-1)^{2^{(y \cdot z)}}
+\sum_{v_k \in  C_{1/2},x\in C_{all/1}} \ket{v_k + x + y}\ket{v_k + x + y}
+$$
+
+As we have seen last week, when we choose $v_k$ from different $x$ then where the $v_k$ belongs we obtain zeros, ie. they are orthogonal and create a basis. So from this we can conclude to obtain valid states, we can choose all $x$ in $C_{all/1}$ where $|C_{all/1}| = 2^{n-k_1}$. And for every $x$ we can choose corresponding $v_k$ that belongs to the particular $x$ to obtain the basis for the coset of x. We have $|C_{1/2}|=2^{k_1-k_2}$ possibilities.
+
+Let's take a look on the first sums, we iterate with $y$ over $C_2$ which gives us another $|C_2|=2^{k_2}$ possibilities. But we have to take into account the hint that for code iterating over the cosets the result will be $\sum{i}(-1)^{y*z_i} = 0$. This is because in half of the cases it remains -1 and in the second half it becomes 1.
+I'm convinced that because we now have something different, more specific $-1^2=1$ and that the whole sum become $1^{zy}$ which is always 1.
+
+Since we can choose $|C_{all/2^\bot}|=|C_2|$ it will cross out with the constant $\frac{1}{|C_2|}$ which is before the whole equation.
+
+Now if we put together all possibilities we have:
+$$
+2^{n-k_1}\cdot 2^{k_1-k_2}\cdot 2^{k_2} = 2^{n-k_1+k_1-k_2+k_2} = 2^n
+$$
+
+So we have as many possibilities for the state as we have on the left side of original equation and we know that in binary field it is possible to encode $2^n$ states with $n$ bit string, and since all these possibilities are equiprobable we have to prepend the factor
+$$
+\frac{1}{\sqrt{2^n}}
+$$
+to obtain a valid state. Now have basis for the whole space on both sides of the equation and therefore the equality holds.
+
+\end{enumerate}
+\end{document}

@@ -1,0 +1,71 @@
+% author: Tomas Trnka
+% mail: tomas@trnkatomas.eu
+% date: 2013-07-04
+
+\documentclass[a4paper,10pt]{article}
+%\usepackage[czech]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[hmargin=2.2cm,vmargin=2.2cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{amsmath} 
+\usepackage{enumerate}
+\usepackage{dsfont}
+\usepackage[hang,small,bf]{caption}    % fancy captions
+\usepackage{tikz}	
+\usetikzlibrary{backgrounds,fit,decorations.pathreplacing}  % TikZ libraries
+\newcommand{\bra}[1]{\ensuremath{\left\langle#1\right|}} % Dirac Bra
+\newcommand{\ket}[1]{\ensuremath{\left|#1\right\rangle}} % Dirac Kets
+\usepackage{hyperref}
+\pagestyle{fancy}
+\headheight 15pt
+\lhead{QIP, Fall 2014}
+\rhead{Tomas Trnka}
+\newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
+\newcommand{\role}[1]{\ensuremath{\left\langle #1 \right\rangle}}
+\newcommand{\cara}{\begin{center}\rule{140mm}{.2mm}\end{center}}
+\newcommand{\mI}{\ensuremath{^\mathcal{I}}}
+\newcommand{\Tbox}[1]{\ensuremath{\mathcal{T}}-Box#1}
+\newcommand{\Abox}[1]{\ensuremath{\mathcal{A}}-Box#1}
+\newcommand{\mC}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\Tc}{\ensuremath{\mathcal{T}_c}}
+\newcommand{\qb}[1]{\ensuremath{\vert{#1}\rangle}}
+\newcommand{\al}{\ensuremath{\alpha}}
+\newcommand{\asp}{\ensuremath{\frac{1}{\sqrt{2}}}}
+\newcommand{\ap}{\ensuremath{\frac{1}{2}}}
+\begin{document}
+\section*{Quantum Fourier Transformation and it's inversion -- Exercise 7}
+\begin{enumerate}[1]
+\item The quantum Fourier transformation inversion is very similar to the transformation itself. It is because of the QFT can be viewed as an operator or more specifically as an unitary matrix. And for the unitary matrices holds that $U^{-1}=U^{\dagger}$, moreover the QFT matrix is symmetric which means that we only complex conjugates the values in the original matrix which gives us $G_M$ for the given input state result as follows:
+$$G_M \ket{j} = \frac{1}{\sqrt{M}} \sum_{k=0}^{M-1} \overline{\omega^jk} \ket{k} $$
+%%%
+% Here goes the standard quantum Fourier transforamtion inverse	
+
+\item 
+When we apply the inverse transformation to the given general state:
+$$
+G_M\ket{i} = \sum_{x=0}^{M-1} G_M \alpha_x \ket{x} = \frac{1}{\sqrt{M}}\sum_{x=0}^{M-1} \alpha_x \sum_{j=0}^{M-1} \omega_\alpha^{-xj} \ket{j} = \sum_{j=0}^{M-1} \sum_{x=0}^{M-1} \frac{1}{\sqrt{M}} \alpha_x  \omega_\alpha^{-xj} \ket{j}
+$$
+Let's denote the final form of the result as:
+$$
+\sum_{j=0}^{M-1} \overline{\gamma_j} \ket{j}
+$$
+When we measure such result we obtain some of the basis vector with following probability
+$$
+|| \overline{\gamma_j} ||^2
+$$
+
+The second step is to apply the original quantum Fourier transformation $F_N$ to the given o~input state \ket{u} = $\sum_{x=0}^{M-1} \alpha_x\ket{x}$.
+We apply the transformation:
+$$
+F_M\ket{u} = \sum_{x=0}^{M-1} F_M \alpha_x \ket{x} = \frac{1}{\sqrt{M}}  \sum_{x=0}^{M-1} \alpha_x \sum_{j=0}^{M-1} \omega_M^{xj} \ket{j} = \sum_{j=0}^{M-1} \sum_{x=0}^{M-1}  \frac{1}{\sqrt{M}} \alpha_x \omega_M^{jx} \ket{j} =  \sum_{j=0}^{N-1} \gamma_j\ket{j}
+$$
+Now when we measure the probability we are obtaining the probability as a $|| \gamma_j ||^2$ then when we compare it to the previous result which is $|| \overline{\gamma_j} ||^2$ we can conclude that they are equal. Because while computing power of two of number and its complex conjugate are equal.
+$$
+|| \gamma_j ||^2 = || \overline{\gamma_j} ||^2
+$$
+If these two measurements are equal it does not matter which one we will use.
+
+\item Remark from the last lecture: we can consider that these two transformation create different ensembles but the resulting density matrix is the same and therefore it really does not matter which of them is used in the last step before we measure. 
+\end{enumerate}
+\end{document}

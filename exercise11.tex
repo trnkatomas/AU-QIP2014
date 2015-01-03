@@ -1,0 +1,85 @@
+% author: Tomas Trnka
+% mail: tomas@trnkatomas.eu
+% date: 2013-07-04
+
+\documentclass[a4paper,10pt]{article}
+%\usepackage[czech]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[hmargin=2.2cm,vmargin=2.2cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{amsmath, tabu} 
+\usepackage{enumerate}
+\usepackage{dsfont}
+\usepackage[hang,small,bf]{caption}    % fancy captions
+\usepackage{tikz}	
+\usetikzlibrary{backgrounds,fit,decorations.pathreplacing}  % TikZ libraries
+\newcommand{\bra}[1]{\ensuremath{\left\langle#1\right|}} % Dirac Bra
+\newcommand{\ket}[1]{\ensuremath{\left|#1\right\rangle}} % Dirac Kets
+\usepackage{hyperref}
+\pagestyle{fancy}
+\headheight 15pt
+\lhead{QIP, Fall 2014}
+\rhead{Tomas Trnka}
+\newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
+\newcommand{\role}[1]{\ensuremath{\left\langle #1 \right\rangle}}
+\newcommand{\cara}{\begin{center}\rule{140mm}{.2mm}\end{center}}
+\newcommand{\mI}{\ensuremath{^\mathcal{I}}}
+\newcommand{\Tbox}[1]{\ensuremath{\mathcal{T}}-Box#1}
+\newcommand{\Abox}[1]{\ensuremath{\mathcal{A}}-Box#1}
+\newcommand{\mC}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\Tc}{\ensuremath{\mathcal{T}_c}}
+\newcommand{\qb}[1]{\ensuremath{\vert{#1}\rangle}}
+\newcommand{\al}{\ensuremath{\alpha}}
+\newcommand{\asp}{\ensuremath{\frac{1}{\sqrt{2}}}}
+\newcommand{\aps}{\ensuremath{\frac{1}{2\sqrt{2}}}}
+\newcommand{\ap}{\ensuremath{\frac{1}{2}}}
+\begin{document}
+\section*{Codewords orthogonality -- Exercise 11}
+We are supposed to show that two CSS codewords \ket{\xi_{x,z,v_k}} and \ket{\xi_{x',z',v_{k'}}} are orthogonal.
+\begin{enumerate}[1.]
+\item I will follow suggested procedure:
+Every pair $(x;v_k)$ determines a quantum state, that can be written as \ket{v_k + C_2}, where this stands for:
+$$
+\ket{v_k + C_2} \equiv \frac{1}{\sqrt{|C_2|}} \sum_{x \in C_2} \ket{v_k + x}
+$$
+
+We can choose such $v_{k'}$ such that $v_k-v_{k'} \in C_2$, than we can see that when we iterating over all items from the set $C_2$, we will obtain the same result. This codewords clearly depends only on choice of $v_k$ which belongs to some coset of $C_2$. Moreover we can see, that if we choose $v_k$ and $v_{k'}$ from different cosets of $C_2$ then we are unable to find such $x,x' \in C_2$ that $v_k + x = v_{k'} + x'$. We also know that \ket{v_k + C_2},\ket{v_{k'} + C_2} span the whole cosets, i.e. for the basis for such cosets. But as we argued that we are unable to find such $x$ and $x'$ that fulfil the $v_k + x = v_{k'} + x'$ and therefore the codewords must be orthogonal.
+
+\item Let's solve the exercise 10.25 from N\&C: Let $C$ be a linear code. Show that if $x \in C^{\bot}$ then $\sum_{y \in C}(-1)^{x\cdot y} = |C|$, while if $x \notin C^{\bot}$ then $\sum_{y \in C}(-1)^{x\cdot y} = 0$
+
+In the first part, if $x \in C^\bot$ then $x\cdot y = 0$, because the $C$ and $C^\bot$ are orthogonal. Therefore we are summing over:
+$$\sum_{y \in C}(-1)^0 = \sum_{y \in C}1 = |C|$$
+
+On the other hand, if $x \in C$ then we claim that we have $2^{|C|}$ possibilities for $x$. For every $x$ that will make $x\cdot y \equiv 0 \mod 2$ we can find such $x'$ just by one bit flip that changes the product to $1$. So in the half of the case we ended up with
+$$
+\sum_{y \in C_0}(-1)^0 = \sum_{y \in C_0}1 = \frac{|C|}{2}
+$$
+and for the other half
+$$
+\sum_{y \in C_1}(-1)^1 = -\sum_{y \in C_1}1 = -\frac{|C|}{2}
+$$
+We can see that if we add these sums together we obtain zero.
+
+\item In the next step let's  start with rewriting directly the inner product of the inputs:
+$$
+\bra{\xi_{x,z,v_k}}\ket{\xi_{x',z',v_{k'}}}
+$$
+The parts can be rewritten:
+$$
+\ket{\xi_{x,z,v_k}} = \frac{1}{\sqrt{|C_2|}} \sum_{y \in C_2} (-1)^{y \cdot z} \ket{v_k + x + y},
+$$
+where $v_k \in  C_{1/2}$,$x\in C_{all/1}$,$z \in C_{all/2^\bot}$
+In case that $v_k$ are distinct we can apply the results from the first section and conclude that the inner product will be 0, the situation is the same when $x$,$x'$ belong to other cosets of $C_1$. The last remaining possibility is as follows (in a form of the inner product):
+$$
+\bra{\xi_{x,z,v_k}}\ket{\xi_{x,z',v_k}} = \frac{1}{\sqrt{|C_2|}} \sum_{y \in C_2} (-1)^{y \cdot z} \bra{v_k + x + y} \frac{1}{\sqrt{|C_2|}} \sum_{y \in C_2} (-1)^{y \cdot z'} \ket{v_k + x + y},
+$$
+$$
+\frac{1}{|C_2|} \sum_{y \in C_2} (-1)^{y(z+z')} \bra{v_k + x + y}   \ket{v_k + x + y},
+$$
+$$
+\frac{1}{|C_2|} \sum_{y \in C_2} (-1)^{y(z+z')} 1
+$$
+But because we are choosing $z$ and $z'$ from $C_{2^\bot}$ we can claim that at least one of the $z$ or $z'$ will contain the current $y$ and therefore we can apply the results from exercise 10.25 and conclude that the sum will be 0.
+\end{enumerate}
+\end{document}

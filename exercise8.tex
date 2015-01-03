@@ -1,0 +1,323 @@
+% author: Tomas Trnka
+% mail: tomas@trnkatomas.eu
+% date: 2013-07-04
+
+\documentclass[a4paper,10pt]{article}
+%\usepackage[czech]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[hmargin=2.2cm,vmargin=2.2cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{amsmath, tabu} 
+\usepackage{enumerate}
+\usepackage{dsfont}
+\usepackage[hang,small,bf]{caption}    % fancy captions
+\usepackage{tikz}	
+\usetikzlibrary{backgrounds,fit,decorations.pathreplacing}  % TikZ libraries
+\newcommand{\bra}[1]{\ensuremath{\left\langle#1\right|}} % Dirac Bra
+\newcommand{\ket}[1]{\ensuremath{\left|#1\right\rangle}} % Dirac Kets
+\usepackage{hyperref}
+\pagestyle{fancy}
+\headheight 15pt
+\lhead{QIP, Fall 2014}
+\rhead{Tomas Trnka}
+\newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
+\newcommand{\role}[1]{\ensuremath{\left\langle #1 \right\rangle}}
+\newcommand{\cara}{\begin{center}\rule{140mm}{.2mm}\end{center}}
+\newcommand{\mI}{\ensuremath{^\mathcal{I}}}
+\newcommand{\Tbox}[1]{\ensuremath{\mathcal{T}}-Box#1}
+\newcommand{\Abox}[1]{\ensuremath{\mathcal{A}}-Box#1}
+\newcommand{\mC}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\Tc}{\ensuremath{\mathcal{T}_c}}
+\newcommand{\qb}[1]{\ensuremath{\vert{#1}\rangle}}
+\newcommand{\al}{\ensuremath{\alpha}}
+\newcommand{\asp}{\ensuremath{\frac{1}{\sqrt{2}}}}
+\newcommand{\ap}{\ensuremath{\frac{1}{2}}}
+\begin{document}
+\section*{QIPexercises -- Exercise 9}
+\begin{enumerate}[1.]
+\item Because they both share the key, B can simply apply to the state that he obtains, let's denote it as:
+$$
+\ket{\varphi}=X^{b_0}Z^{b_1}\ket{\psi}
+$$
+the $X$ and $Z$ controlled with the shared key in reverse order. He can do it because $X$ and $Z$ are inversions of themselves:
+$$
+Z^{b_1}X^{b_0}\ket{\varphi}=Z^{b_1}X^{b_0}X^{b_0}Z^{b_1}\ket{\psi}=
+Z^{b_1}Z^{b_1}\ket{\psi}=\ket{\psi}
+$$
+
+\item For computing the  density matrix we have to compute the output for the encryption circuit.
+Just to commemorate how $X$ and $Z$ looks like
+$$
+X = 
+\left[ \begin{array}{cc} 
+0 & 1 \\
+1 & 0
+\end{array} \right]
+\text{, }Z = \left[ \begin{array}{cc} 
+1 & 0 \\
+0 & -1
+\end{array} \right]
+$$
+
+Applying $Z^{b_1}$ and $X^{b_0}$ we obtain:
+$$
+\alpha^{b_0} \left( -1^{b_1}\beta \right)^{1-b_0}\ket{0} + \alpha^{1-b_0} \left( -1^{b_1}\beta \right)^{b_0}\ket{1}
+$$
+
+Since the $b_0$ and $b_1$ can be only $0$ or $1$ zero we can determine all possible outcomes:
+$$
+\begin{tabu}{|c|c|r|}\hline
+  b_0 & b_1 & \text{output} \\ \hline
+  0 & 0 & \beta\ket{0} + \alpha\ket{1} \\ \hline
+  1 & 0 & \alpha\ket{0} - \beta\ket{1} \\ \hline
+  0 & 1 & -\beta\ket{0} + \alpha\ket{1} \\ \hline
+  1 & 1 & \alpha\ket{0} + \beta\ket{1} \\ \hline
+\end{tabu}
+$$
+
+That is something what we have already seen in the quantum transportation algorithm.
+All these states have the same probability, so we can create ensemble
+$$
+{(\frac{1}{4},\beta\ket{0} + \alpha\ket{1}),
+ (\frac{1}{4},\alpha\ket{0} - \beta\ket{1}),
+ (\frac{1}{4},-\beta\ket{0} + \alpha\ket{1}),
+ (\frac{1}{4},\alpha\ket{0} + \beta\ket{1})}
+$$
+Now we can create density matrix as:
+$$
+\frac{1}{4}\left(
+\left(
+\begin{array}{c}
+\beta\\
+\alpha
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+\beta^* & \alpha^*
+\end{array}
+\right)
++
+\left(
+\begin{array}{c}
+\alpha\\
+-\beta
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+ \alpha^*& -\beta^*
+\end{array}
+\right)
++
+\left(
+\begin{array}{c}
+-\beta\\
+\alpha
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+-\beta^* & \alpha^*
+\end{array}
+\right)
++
+\left(
+\begin{array}{c}
+\alpha\\
+\beta\\
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+\alpha^* & \beta^*
+\end{array}
+\right)
+\right)
+$$
+
+$$
+\frac{1}{4}\left(
+\left(
+\begin{array}{cc}
+||\beta||^2 & \alpha^*\beta \\
+\alpha\beta^* & ||\alpha||^2
+\end{array}
+\right)
++
+\left(
+\begin{array}{cc}
+||\alpha||^2 & \alpha^*-\beta \\
+-\alpha^*\beta &  ||\beta||^2
+\end{array}
+\right)
++
+\left(
+\begin{array}{cc}
+||\beta||^2 & \alpha^*-\beta \\
+-\alpha\beta^* &  ||\alpha||^2
+\end{array}
+\right)
++
+\left(
+\begin{array}{cc}
+||\alpha||^2 & \alpha^*\beta \\
+\alpha^*\beta & ||\beta||^2
+\end{array}
+\right)
+\right)
+$$
+$$
+\frac{1}{4}\left(
+\begin{array}{cc}
+2(||\alpha||^2 + ||\beta||^2) & 0 \\
+0 & 2(||\alpha||^2 + ||\beta||^2)
+\end{array}
+\right)
+=
+\frac{1}{4}\left(
+\begin{array}{cc}
+2 & 0 \\
+0 & 2
+\end{array}
+\right)
+=
+\left(
+\begin{array}{cc}
+\frac{1}{2} & 0 \\
+0 & \frac{1}{2}
+\end{array}
+\right)
+$$
+
+And from this density matrix the observer know nothing, when he do not know the secret key, it appears as completely random state.
+
+\item For one random control bit and one shared I would suggest to do:
+$$
+Y^bZ^r \ket{\psi}
+$$
+
+We proceed through the same procedure as above and ended up with the probability table
+$$
+\begin{tabu}{|c|c|r|}\hline
+  r & b & \text{output} \\ \hline
+  0 & 0 & i\beta\ket{0} - i\alpha\ket{1} \\ \hline
+  1 & 0 & -i\beta\ket{0} - i\alpha\ket{1} \\ \hline
+  0 & 1 & i\alpha\ket{0} + i\beta\ket{1} \\ \hline
+  1 & 1 & i\alpha\ket{0} - i\beta\ket{1} \\ \hline
+\end{tabu}
+$$
+
+The when we compute the density matrix:
+$$
+\frac{1}{4}\left(
+\left(
+\begin{array}{c}
+i\beta\\
+-i\alpha
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+i\beta & -i\alpha
+\end{array}
+\right)
++
+\left(
+\begin{array}{c}
+-i\beta\\
+-i\alpha
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+-i\beta&-i\alpha
+\end{array}
+\right)
++
+\left(
+\begin{array}{c}
+i\alpha\\
+i\beta
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+i\alpha & i\beta
+\end{array}
+\right)
++
+\left(
+\begin{array}{c}
+i\alpha\\
+-i\beta\\
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+i\alpha & -i\beta
+\end{array}
+\right)
+\right)
+$$
+
+$$
+\frac{1}{4}\left(
+\left(
+\begin{array}{cc}
+-||\beta||^2 & \alpha\beta \\
+\alpha\beta & -||\alpha||^2
+\end{array}
+\right)
++
+\left(
+\begin{array}{cc}
+-||\beta||^2 & -\alpha-\beta \\
+-\alpha\beta &  -||\alpha||^2
+\end{array}
+\right)
++
+\left(
+\begin{array}{cc}
+-||\alpha||^2 & -\alpha\beta \\
+-\alpha\beta &  -||\beta||^2
+\end{array}
+\right)
++
+\left(
+\begin{array}{cc}
+-||\alpha||^2 & \alpha\beta \\
+\alpha\beta & -||\beta||^2
+\end{array}
+\right)
+\right)
+$$
+$$
+-\frac{1}{4}\left(
+\begin{array}{cc}
+2(||\alpha||^2 + ||\beta||^2) & 0 \\
+0 & 2(||\alpha||^2 + ||\beta||^2)
+\end{array}
+\right)
+=
+-\frac{1}{4}\left(
+\begin{array}{cc}
+2 & 0 \\
+0 & 2
+\end{array}
+\right)
+=
+-\left(
+\begin{array}{cc}
+\frac{1}{2} & 0 \\
+0 & \frac{1}{2}
+\end{array}
+\right)
+$$
+
+This is the same as previous, the attacker knows nothing what was sent, this also work just because we are working with assumption that $\alpha$ and $\beta$ are real.
+
+When Bob would like to decode, he firstly apply the $Y$ gate which is also its own inverse. And then he can flip the coin whether he will use $Z$ gate or not. This gate will influence only the sign of the \ket{1} coefficient which we can consider once again as a `unimportant phase shift'.
+\end{enumerate}
+\end{document}

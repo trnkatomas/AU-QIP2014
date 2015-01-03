@@ -1,0 +1,294 @@
+% author: Tomas Trnka
+% mail: tomas@trnkatomas.eu
+% date: 2013-07-04
+
+\documentclass[a4paper,10pt]{article}
+%\usepackage[czech]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[hmargin=2.2cm,vmargin=2.2cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{amsmath, tabu} 
+\usepackage{enumerate}
+\usepackage{dsfont}
+\usepackage[hang,small,bf]{caption}    % fancy captions
+\usepackage{tikz}	
+\usetikzlibrary{backgrounds,fit,decorations.pathreplacing}  % TikZ libraries
+\newcommand{\bra}[1]{\ensuremath{\left\langle#1\right|}} % Dirac Bra
+\newcommand{\ket}[1]{\ensuremath{\left|#1\right\rangle}} % Dirac Kets
+\usepackage{hyperref}
+\pagestyle{fancy}
+\headheight 15pt
+\lhead{QIP, Fall 2014}
+\rhead{Tomas Trnka}
+\newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
+\newcommand{\role}[1]{\ensuremath{\left\langle #1 \right\rangle}}
+\newcommand{\cara}{\begin{center}\rule{140mm}{.2mm}\end{center}}
+\newcommand{\mI}{\ensuremath{^\mathcal{I}}}
+\newcommand{\Tbox}[1]{\ensuremath{\mathcal{T}}-Box#1}
+\newcommand{\Abox}[1]{\ensuremath{\mathcal{A}}-Box#1}
+\newcommand{\mC}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\Tc}{\ensuremath{\mathcal{T}_c}}
+\newcommand{\qb}[1]{\ensuremath{\vert{#1}\rangle}}
+\newcommand{\al}{\ensuremath{\alpha}}
+\newcommand{\asp}{\ensuremath{\frac{1}{\sqrt{2}}}}
+\newcommand{\ap}{\ensuremath{\frac{1}{2}}}
+\begin{document}
+\section*{QIPexercises -- Exercise 9}
+\begin{enumerate}[1.]
+\item We create the $\otimes$ product of \ket{0} and \ket{\psi}. Which is:
+$$
+\ket{0}\otimes \ket{\psi} = \alpha\ket{00}+\beta\ket{01}
+$$
+When we apply the CNOT gate
+$$
+\left(
+\begin{array}{cccc}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 1\\
+0& 0 & 1 & 0
+\end{array}
+\right)
+\left(
+\begin{array}{cccc}
+\alpha & 0& 0&0\\
+0&\beta&0&0\\
+0&0&0&0\\
+0&0&0&0
+\end{array}
+\right)
+=
+\left(
+\begin{array}{cccc}
+\alpha & 0&0 &0\\
+0&\beta&0&0\\
+0&0&0&0\\
+0&0&0&0
+\end{array}
+\right)=\alpha\ket{00} + \beta\ket{01}
+$$
+The we copute the density matrix of such `touched' state
+$$
+\ket{\psi_E}\bra{\psi_E} = (\alpha\ket{00} + \beta\ket{01})(\alpha\bra{00} + \beta\bra{01}) = \alpha^2\ket{00}\bra{00} +\alpha\beta\ket{00}\bra{01} + \alpha\beta\ket{01}\bra{00} + \beta^2\ket{01}\bra{01}\text{ (*)}
+$$
+Then we trace out the qubit touched kept by eavesdropper:
+$$
+Tr(*)=Tr(\alpha^2\ket{00}\bra{00}) + Tr(\alpha\beta\ket{00}\bra{01})+ Tr(\alpha\beta\ket{01}\bra{00}) + Tr(\beta^2\ket{01}\bra{01}) = 
+$$
+$$
+\alpha^2 \bra{0}\ket{0}\ket{0}\bra{0} + \alpha\beta\bra{0}\ket{0}\ket{0}\bra{1} + \alpha\beta\bra{0}\ket{0}\ket{1}\bra{0}+\beta^2\bra{0}\ket{0}\ket{1}\bra{1}=
+$$
+$$
+\alpha^2 \left(\begin{array}{cc}1&0\\0&0\end{array}\right)+\alpha\beta\left(\begin{array}{cc}0&1\\0&0\end{array}\right)+\alpha\beta \left(\begin{array}{cc}0&0\\1&0\end{array}\right)+\beta^2 \left(\begin{array}{cc}0&0\\0&1\end{array}\right)
+=\left(\begin{array}{cc}\alpha^2&\alpha\beta\\\alpha\beta&\beta^2\end{array}\right)
+$$
+The density matrix for \ket{\psi} would be:
+$$
+\left(\begin{array}{c}\alpha\\\beta\end{array}\right)
+\left(\begin{array}{cc}\alpha&\beta\end{array}\right)=
+\left(\begin{array}{cc}\alpha^2&\alpha\beta\\\alpha\beta&\beta^2\end{array}\right)
+$$
+And we can see that their density matrices are the same as if there was no eavesdropper.
+
+\item The \ket{+} stands for $\frac{1}{\sqrt{2}} (\ket{0} + \ket{1}$.
+In the first step we will compute the $\otimes$ product of \ket{+} and \ket{\psi}.
+$$
+\ket{+}\otimes\ket{\psi} = \asp (\alpha \ket{00}  + \beta\ket{01} + \alpha \ket{10} + \beta \ket{11})
+$$
+Then we have to apply CNOT gate:
+$$
+\left(
+\begin{array}{cccc}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0
+\end{array}
+\right)
+\asp
+\left(
+\begin{array}{cccc}
+\alpha & 0 & 0 & 0\\
+0 & \beta & 0 & 0\\
+0 & 0 & \alpha & 0\\
+0 & 0 & 0 & \beta
+\end{array}
+\right)
+=
+\asp
+\left(
+\begin{array}{cccc}
+\alpha & 0 & 0 & 0\\
+0 & \beta & 0 & 0\\
+0 & 0 & 0 & \beta\\
+0 & 0 & \alpha & 0
+\end{array}
+\right)
+$$
+After the E acted B receives the state:
+$$
+\asp (\alpha \ket{00}  + \beta\ket{01} + \beta \ket{10} + \alpha \ket{11} )
+$$
+We again compute the density matrix and trace out the `touched' qubit
+$$
+\ket{\psi_e}\bra{\psi_e} = \asp \asp (\alpha\ket{00} + \beta\ket{01} + \beta\ket{10} + \alpha\ket{11})(\alpha\bra{00} + \beta\bra{01} + \beta\bra{10} + \alpha\bra{11})=
+$$
+$$
+\ap ( \alpha^2\ket{00}\bra{00} + \alpha\beta\ket{00}\bra{01}+\alpha\beta \ket{00}\bra{10} + \beta^2\ket{00}\bra{11} +
+$$
+$$
+\alpha\beta\ket{01}\bra{00} +\beta^2\ket{01}\bra{01} +\beta^2\ket{01}\bra{10} +\alpha\beta\ket{01}\bra{11} +
+$$
+$$
+\alpha\beta\ket{10}\bra{00} +\beta^2\ket{10}\bra{01} + \beta^2\ket{10}\bra{10} +\alpha\beta\ket{10}\bra{11} + 
+$$
+$$
+\alpha^2\ket{11}\bra{00} +\alpha\beta\ket{11}\bra{01} + \alpha\beta \ket{11}\bra{10}+\alpha^2\ket{11}\bra{11})
+$$
+
+We have to again trace out the quibit kept by E:
+$$
+Tr(\ket{\psi_e}\bra{\psi_e}) =
+\ap ( Tr(\alpha^2\ket{00}\bra{00}) + Tr(\alpha\beta\ket{00}\bra{01})+Tr(\alpha\beta \ket{00}\bra{10}) + Tr(\beta^2\ket{00}\bra{11}) +
+$$
+$$
+Tr(\alpha\beta\ket{01}\bra{00}) +Tr(\beta^2\ket{01}\bra{01}) +Tr(\beta^2\ket{01}\bra{10}) +Tr(\alpha\beta\ket{01}\bra{11}) +
+$$
+$$
+Tr(\alpha\beta\ket{10}\bra{00}) +Tr(\beta^2\ket{10}\bra{01}) + Tr(\beta^2\ket{10}\bra{10}) +Tr(\alpha\beta\ket{10}\bra{11}) + 
+$$
+$$
+Tr(\alpha^2\ket{11}\bra{00}) +Tr(\alpha\beta\ket{11}\bra{01}) + Tr(\alpha\beta \ket{11}\bra{10})+Tr(\alpha^2\ket{11}\bra{11}))=
+$$
+$$
+\ap ( \alpha^2\bra{0}\ket{0}\ket{0}\bra{0} + \alpha\beta\bra{0}\ket{0}\ket{0}\bra{1}+\alpha\beta\bra{0}\ket{1}\ket{0}\bra{0} + \beta^2\bra{0}\ket{1}\ket{0}\bra{1} +
+$$
+$$
+\alpha\beta\bra{0}\ket{0}\ket{1}\bra{0} + \beta^2\bra{0}\ket{0}\ket{1}\bra{1} +\beta^2\bra{0}\ket{1}\ket{1}\bra{0} + \alpha\beta\bra{0}\ket{1}\ket{1}\bra{1} +
+$$
+$$
+\alpha\beta\bra{1}\ket{0}\ket{0}\bra{0} + \beta^2\bra{1}\ket{0}\ket{0}\bra{1}) + \beta^2\bra{1}\ket{1}\ket{0}\bra{0}) + \alpha\beta\bra{1}\ket{1}\ket{0}\bra{1} + 
+$$
+$$
+\alpha^2\bra{1}\ket{0}\ket{1}\bra{0}) +\alpha\beta\bra{1}\ket{0}\ket{1}\bra{1}) + \alpha\beta\bra{1}\ket{1}\ket{1}\bra{0})+\alpha^2\bra{1}\ket{1}\ket{1}\bra{1}))=
+$$
+$$
+\ap (\alpha^2\ket{0}\bra{0} + \alpha\beta\ket{0}\bra{1} + \beta^2\ket{0}\bra{0} + \alpha\beta\ket{0}\bra{1} + \alpha\beta\ket{1}\bra{0} + \beta^2\ket{1}\bra{1} + \alpha\beta\ket{1}\bra{0} + \alpha^2\ket{1}\bra{1})=
+$$
+
+$$
+\ap \left(
+\left(\begin{array}{cc}\alpha^2&0\\0&0\end{array}\right) + 
+\left(\begin{array}{cc}0&\alpha\beta\\0&0\end{array}\right) +
+\left(\begin{array}{cc}\beta^2&0\\0&0\end{array}\right) + 
+\left(\begin{array}{cc}0&\alpha\beta\\0&0\end{array}\right)\right) + 
+$$
+$$
+\ap \left(
+\left(\begin{array}{cc}0&0\\\alpha\beta&0\end{array}\right) +
+\left(\begin{array}{cc}0&0\\0&\beta^2\end{array}\right) +
+\left(\begin{array}{cc}0&0\\\alpha\beta&0\end{array}\right)+
+\left(\begin{array}{cc}0&0\\0&\alpha^2\end{array}\right)
+\right)=
+$$
+$$
+\ap
+\left(\begin{array}{cc}\alpha^2+\beta^2&2\alpha\beta\\2\alpha\beta&\alpha^2+\beta^2\end{array}\right)=\ap\left(\begin{array}{cc}1&2\alpha\beta\\2\alpha\beta&1\end{array}\right)
+$$
+
+The $\varepsilon$ operation is considered to be $\sum_i \varepsilon_i \rho \varepsilon^\dagger$. In our case it will be:
+$$
+\asp I \rho  \asp I^\dagger + \asp X \rho \asp X^\dagger = \ap I \rho  I + \ap X \rho X
+$$
+
+The state \ket{\psi}\bra{\psi} is equal to:
+$$
+\left(
+\begin{array}{c}
+\alpha\\
+\beta
+\end{array}
+\right)
+\left(
+\begin{array}{cc}
+\alpha & \beta
+\end{array}
+\right)
+=
+\left(
+\begin{array}{cc}
+\alpha^2 & \alpha\beta \\
+\alpha\beta & \beta^2
+\end{array}
+\right)
+$$
+
+By applying the $\varepsilon$ to \ket{\psi}\bra{\psi} we obtain:
+$$
+\ap I \left(
+\begin{array}{cc}
+\alpha^2 & \alpha\beta \\
+\alpha\beta & \beta^2
+\end{array}
+\right) I +
+\ap X
+\left(
+\begin{array}{cc}
+\alpha^2 & \alpha\beta \\
+\alpha\beta & \beta^2
+\end{array}
+\right)
+X
+$$
+$$
+\ap \left(
+\begin{array}{cc}
+\alpha^2 & \alpha\beta \\
+\alpha\beta & \beta^2
+\end{array}
+\right)+
+\ap
+\left(
+\begin{array}{cc}
+\alpha\beta & \beta^2\\
+\alpha^2 & \alpha\beta
+\end{array}
+\right)
+X
+=
+\ap \left(
+\begin{array}{cc}
+\alpha^2 & \alpha\beta \\
+\alpha\beta & \beta^2
+\end{array}
+\right)+
+\ap
+\left(
+\begin{array}{cc}
+\beta^2 & \alpha\beta \\
+\alpha\beta & \alpha^2 
+\end{array}
+\right)
+$$
+
+When we sum the parts we obtain:
+$$
+\ap \left(
+\begin{array}{cc}
+\alpha^2 + \beta^2 & \alpha\beta + \alpha\beta\\
+\alpha\beta + \alpha\beta & \alpha^2 + \beta^2 
+\end{array}
+\right)
+=
+\ap \left(
+\begin{array}{cc}
+1 & 2\alpha\beta\\
+2\alpha\beta & 1
+\end{array}
+\right)
+$$
+
+As we can see we obtained the same result as if the eavesdropper interacted with \ket{+} state.
+\end{enumerate}
+\end{document}
